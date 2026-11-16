@@ -51,4 +51,13 @@ void main() {
       expect(WaterSortGame.demo().solved, false);
     });
   });
+  test('legal move hints do not mutate the board', () {
+    final game = WaterSortGame([[1], [], [2]]);
+    final before = game.tubes.map((t) => List<int>.from(t)).toList();
+    expect(game.legalMoves, contains((0, 1)));
+    expect(game.legalMoves, isNot(contains((0, 2))));
+    expect(game.tubes, before);
+    expect(game.moves, 0);
+  });
+
 }
