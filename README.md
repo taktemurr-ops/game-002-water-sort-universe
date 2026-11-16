@@ -1,29 +1,33 @@
 # Water Sort Universe
 
-Game Studio 100 | Bulmaca ve Zeka | Flutter + Flame | Android + iOS
+**Game Studio 100 | Puzzle | Android / iOS | Flutter**
 
-## Product strategy
-Combine useful modes and mechanisms of competing games into one cohesive,
-distinctive, legally independent game. Competitive features are research
-candidates, NOT confirmed implementations.
+## First playable prototype committed
+- Select source and destination tubes by tapping
+- Four-layer tube capacity, same-color contiguous pours
+- Invalid move feedback and victory detection
+- Undo history and level restart
+- Pure Dart rules in `lib/game/water_sort_game.dart`
+- Six core rule tests in `test/water_sort_game_test.dart`
+- Demo level with two colors and one empty tube
 
-## MVP
-- Reliable core gameplay loop with pause/resume, save, audio and settings
-- Guided onboarding, session metrics and accessibility considerations
-- Levels or escalating difficulty; progress and achievements
-- Ad and IAP adapters (disabled until fully configured and tested)
-- Android/iOS release preparation and privacy requirements
+## How to run
+```bash
+flutter pub get
+flutter test
+flutter run
+```
 
-## Later releases
-- Additional game modes and mechanics after competitor analysis
-- Events, daily challenges, cosmetics, social or leaderboard features where suitable
-- Analytics and A/B tests for retention, difficulty and ad frequency
+**Verification:** Source and tests are committed to GitHub but have not been
+compiled or run with Flutter SDK in this ChatGPT session.
 
-## Acceptance
-- Deterministic rule tests and device performance verification
-- Game plays without crashes; save/load retains progress
-- Offline play where the mode does not require a network
-- Ads never interrupt an active gameplay turn
-- Store policy, privacy consent and purchase restore checks
+## Next milestones
+1. Animated pouring, haptics and polished bottle artwork.
+2. Procedurally generated, **solvable** level packs with difficulty validation.
+3. Hint system and level undo limits; save/load.
+4. Classic, timed, challenge and zen modes.
+5. Localization, accessibility, analytics, store policy review.
+6. Ads and optional purchases after consent and correct integration tests.
 
-See docs for feature backlog, research method, revenue plan and roadmap.
+The project deliberately avoids copying proprietary game assets and branding.
+See `docs/` for the roadmap and feature research backlog.
