@@ -30,6 +30,17 @@ class WaterSortGame {
 
   bool get canUndo => _history.isNotEmpty;
 
+  /// Legal source/destination pairs for hint UI; does not mutate game state.
+  List<(int, int)> get legalMoves {
+    final result = <(int, int)>[];
+    for (var from = 0; from < tubes.length; from++) {
+      for (var to = 0; to < tubes.length; to++) {
+        if (canPour(from, to)) result.add((from, to));
+      }
+    }
+    return result;
+  }
+
   bool canPour(int from, int to) {
     if (from == to || from < 0 || to < 0 || from >= tubes.length || to >= tubes.length) {
       return false;
