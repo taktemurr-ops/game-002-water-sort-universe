@@ -111,7 +111,7 @@ class _WaterSortScreenState extends State<WaterSortScreen> {
                 borderRadius: BorderRadius.circular(12),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: layers.reversed.map((color) => Container(
+                  children: layers.map((color) => Container(
                     height: 40,
                     width: double.infinity,
                     decoration: BoxDecoration(
