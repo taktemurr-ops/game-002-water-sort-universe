@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'game/water_sort_game.dart';
+import 'game/sort_levels.dart';
 
 void main() => runApp(const WaterSortUniverse());
 
@@ -27,7 +28,8 @@ class WaterSortScreen extends StatefulWidget {
 }
 
 class _WaterSortScreenState extends State<WaterSortScreen> {
-  WaterSortGame game = WaterSortGame.demo();
+  int levelIndex = 0;
+  WaterSortGame game = WaterSortGame(SortLevels.get(0));
   int? selected;
   String message = 'Choose one tube, then tap the destination.';
 
@@ -62,6 +64,16 @@ class _WaterSortScreenState extends State<WaterSortScreen> {
               ? 'Level complete! All colors sorted.'
               : 'Moved $moved liquid layer(s).';
       selected = null;
+    });
+  }
+
+  void loadLevel(int index) {
+    if (index < 0 || index >= SortLevels.count) return;
+    setState(() {
+      levelIndex = index;
+      game = WaterSortGame(SortLevels.get(levelIndex));
+      selected = null;
+      message = 'Level ${levelIndex + 1}: sort each color into a full tube.';
     });
   }
 
@@ -124,6 +136,7 @@ class _WaterSortScreenState extends State<WaterSortScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Water Sort Universe')),
+        
         body: SafeArea(
           child: Center(
             child: ConstrainedBox(
@@ -137,6 +150,19 @@ class _WaterSortScreenState extends State<WaterSortScreen> {
                       'Moves: ${game.moves}',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      IconButton(
+                        onPressed: levelIndex > 0 ? () => loadLevel(levelIndex - 1) : null,
+                        icon: const Icon(Icons.chevron_left),
+                        tooltip: 'Previous level',
+                      ),
+                      Text('Level ${levelIndex + 1} / ${SortLevels.count}'),
+                      IconButton(
+                        onPressed: levelIndex + 1 < SortLevels.count ? () => loadLevel(levelIndex + 1) : null,
+                        icon: const Icon(Icons.chevron_right),
+                        tooltip: 'Next level',
+                      ),
+                    ]),
                     const SizedBox(height: 20),
                     Wrap(
                       alignment: WrapAlignment.center,
@@ -164,7 +190,7 @@ class _WaterSortScreenState extends State<WaterSortScreen> {
                         ),
                         FilledButton.icon(
                           onPressed: () => setState(() {
-                            game = WaterSortGame.demo();
+                            game = WaterSortGame(SortLevels.get(levelIndex));
                             selected = null;
                             message = 'New game started.';
                           }),
