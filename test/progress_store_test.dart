@@ -10,7 +10,7 @@ void main() {
 
   test('save/restore current board and timer', () async {
     final store = ProgressStore();
-    final initial = ProgressSnapshot(mode: GameMode.timed, level: 3,
+    const initial = ProgressSnapshot(mode: GameMode.timed, level: 3,
       secondsLeft: 67, moves: 5, board: [[0, 0, 1], [1, 1, 0], []]);
     await store.saveSession(initial);
     final restored = await store.readSession();

@@ -478,7 +478,7 @@ class _WaterSortScreenState extends State<WaterSortScreen>
                   key: const ValueKey('undo')),
               _pill(tr('hint'), Icons.lightbulb_outline, mode.allowsHints ? _hint : null,
                   key: const ValueKey('hint')),
-              _pill(tr('restart'), Icons.restart, () => _begin(mode, level: levelIndex),
+              _pill(tr('restart'), Icons.restart_alt, () => _begin(mode, level: levelIndex),
                   key: const ValueKey('restart')),
             ]),
           if (mode == GameMode.classic || mode == GameMode.zen)
