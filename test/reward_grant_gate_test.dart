@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import '../lib/monetization/reward_grant_gate.dart';
+import 'package:game_002_water_sort_universe/monetization/reward_grant_gate.dart';
 
 void main() {
   test('unverified, duplicate and cancelled rewards are never granted', () {

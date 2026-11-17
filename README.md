@@ -1,33 +1,30 @@
-# Water Sort Universe
+# Game 002 — Water Sort Universe | offline feature package
 
-**Game Studio 100 | Puzzle | Android / iOS | Flutter**
+This is a complete *source-code overlay* for the **existing** private
+`taktemurr-ops/game-002-water-sort-universe` Flutter repository, not a new game
+repository. It includes improved game engine, bounded solver, 120 reproducible
+campaign boards, localized responsive UI, local progression and settings,
+unit/widget tests and a CI workflow. The original repo's monetization policy
+modules and tests must be retained.
 
-## First playable prototype committed
-- Select source and destination tubes by tapping
-- Four-layer tube capacity, same-color contiguous pours
-- Invalid move feedback and victory detection
-- Undo history and level restart
-- Pure Dart rules in `lib/game/water_sort_game.dart`
-- Six core rule tests in `test/water_sort_game_test.dart`
-- Demo level with two colors and one empty tube
+## Apply to an existing checkout
 
-## How to run
 ```bash
+python3 tools/apply_to_repo.py /path/to/game-002-water-sort-universe
+cd /path/to/game-002-water-sort-universe
 flutter pub get
+flutter analyze --fatal-infos
 flutter test
-flutter run
+flutter build apk --debug
 ```
 
-**Verification:** Source and tests are committed to GitHub but have not been
-compiled or run with Flutter SDK in this ChatGPT session.
+Source snapshot uploaded to GitHub at the user's request. CI and mobile/store release gates have NOT yet been confirmed successful.
+Existing repository code is preserved by copying only overlapping paths.
 
-## Next milestones
-1. Animated pouring, haptics and polished bottle artwork.
-2. Procedurally generated, **solvable** level packs with difficulty validation.
-3. Hint system and level undo limits; save/load.
-4. Classic, timed, challenge and zen modes.
-5. Localization, accessibility, analytics, store policy review.
-6. Ads and optional purchases after consent and correct integration tests.
+## What this package does NOT claim
 
-The project deliberately avoids copying proprietary game assets and branding.
-See `docs/` for the roadmap and feature research backlog.
+It does not claim an Android or iOS build has passed, or that SDK-based ads,
+verified purchases, store signed releases, privacy store forms or live store
+submissions have been completed. See `docs/RELEASE_READINESS.md` for hard gates.
+
+GitHub game-002 issue: https://github.com/taktemurr-ops/game-002-water-sort-universe/issues/1
