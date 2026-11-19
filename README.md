@@ -1,30 +1,58 @@
-# Game 002 — Water Sort Universe | offline feature package
+# Su Sıralama Evreni · Water Sort Universe
 
-This is a complete *source-code overlay* for the **existing** private
-`taktemurr-ops/game-002-water-sort-universe` Flutter repository, not a new game
-repository. It includes improved game engine, bounded solver, 120 reproducible
-campaign boards, localized responsive UI, local progression and settings,
-unit/widget tests and a CI workflow. The original repo's monetization policy
-modules and tests must be retained.
+**Game Studio 100 · #002 · Bulmaca ve Zekâ** · Flutter · Android · iOS · Web
 
-## Apply to an existing checkout
+Dök, sırala, rahatla!
+
+## Oyun
+
+Renkli sıvıları şişeler arasında dökerek her şişede tek renk kalmasını sağla. Aynı renkteki üst katman tek seferde akar.
+
+- **Mekanikler:** gizli renkler ("?"), 5 katlı uzun şişeler, tek boş şişe, süreli bölümler
+- **Güçlendiriciler:** ipucu (çözücüden gelen gerçek hamle), geri al, +1 boş şişe
+- **Modlar:** Macera (50.000+), Sonsuz zincir, Zamana karşı, Zen, Günün/Haftanın bölümü, 150 meydan okuma
+- 11 renge kadar, renk körü sembolleri, takılınca devam seçeneği
+- Her bölüm çözücüyle doğrulanır; yıldızlar çözüm uzunluğuna göre
+
+## Bütün oyunlarda ortak sistemler
+
+| Sistem | Durum | Dosya |
+|---|---|---|
+| 50.000 bölüm + sonsuz bölüm (seed ile deterministik, her bölüm çözülebilirlik testinden geçer) | ✅ | `lib/core/level_plan.dart`, `lib/game/rules.dart` |
+| 500 dünya, her 10 bölümde zorluk, her 50 bölümde yeni mekanik kombinasyonu, her 100 bölümde tema, her 1000 bölümde özel ödül | ✅ | `lib/core/level_plan.dart` |
+| Oyuncu performansına göre zorluk ayarı | ✅ | `AdaptiveDifficulty` |
+| Modlar: Macera, Sonsuz, Zamana karşı, Zen, Günün bölümü, Haftanın bölümü, 150 meydan okuma | ✅ | `lib/app/screens/home.dart` |
+| Günlük giriş ödülü (7 günlük döngü), seri, şans çarkı, günlük sürpriz, geri dönen oyuncu ödülü | ✅ | `lib/core/daily.dart` |
+| 4 günlük + 7 haftalık görev (tarihe göre otomatik yenilenir), günlük rekor, haftalık kişisel hedef | ✅ | `lib/core/missions.dart` |
+| 200+ başarım (50+ gizli) | ✅ | `lib/core/achievements.dart` |
+| Oyuncu seviyesi 1-500, 5 kademe (Başlangıç → Efsane) | ✅ | `lib/core/progression.dart` |
+| 236 koleksiyon parçası: tema, görünüm, rozet, avatar, çerçeve, efekt | ✅ | `lib/core/collection.dart` |
+| İnternetsiz oyun, otomatik kayıt, 3 yedek + yarım kalan yazmayı kurtarma, checksum, sürüm geçişi, yedek kodu ile dışa/içe aktarma | ✅ | `lib/core/save_store.dart`, `lib/core/save_data.dart` |
+| Uygulama kapanınca bölüme kaldığı yerden devam | ✅ | `resume` |
+| Saat manipülasyonu koruması | ✅ | `lib/core/clock.dart` |
+| Çökme döngüsü algılama → güvenli mod, hata günlüğü, performans ölçümü | ✅ | `lib/core/telemetry.dart` |
+| Acil durum yapılandırması (reklam/satın alma/analitik kapatma) | ✅ | `assets/config/emergency.json` |
+| İzinli, çevrimdışı kuyruklu analitik | ✅ | `AnalyticsQueue` |
+| AdMob: ödüllü + geçiş reklamı, sıklık sınırı, UMP/GDPR rızası, yaş kontrolü | ✅ (test kimlikleri) | `lib/app/services/ads_mobile.dart` |
+| Satın alma: reklamsız, premium, altın, ipucu, başlangıç paketi; doğrulama, geri yükleme, iade, tekrar koruması | ✅ (ürünler mağazada açılmalı) | `lib/core/monetization.dart` |
+| 5 dil (TR, EN, DE, ES, FR), renk körü modu, animasyon azaltma, yazı boyutu, solak düzen, titreşim | ✅ | `lib/core/strings.dart`, Ayarlar |
+| Özgün ikon, splash, ses efektleri, müzik, mağaza görselleri (kodla üretilir) | ✅ | `tool/generate_assets.py` |
+| CI: analiz, testler, APK + AAB, Web; iOS (manuel); haftalık 10.000 bölüm + 24 ay simülasyonu | ✅ | `.github/workflows/` |
+
+## Çalıştırma
 
 ```bash
-python3 tools/apply_to_repo.py /path/to/game-002-water-sort-universe
-cd /path/to/game-002-water-sort-universe
+pip install pillow && python tool/generate_assets.py   # ikon, splash, ses, mağaza görselleri
+flutter create --platforms=android,ios,web --org com.gamestudio100 --project-name game_002_water_sort_universe .
+python tool/patch_platforms.py                         # AdMob id, izinler, uygulama adı
 flutter pub get
-flutter analyze --fatal-infos
+dart run flutter_launcher_icons && dart run flutter_native_splash:create
 flutter test
-flutter build apk --debug
+flutter run                                            # veya: flutter run -d chrome
 ```
 
-Source snapshot uploaded to GitHub at the user's request. CI and mobile/store release gates have NOT yet been confirmed successful.
-Existing repository code is preserved by copying only overlapping paths.
+Uzun testler: `flutter test --dart-define=LONG=true test/long_run_test.dart test/soak_test.dart`
 
-## What this package does NOT claim
+## Yayın öncesi yapılacaklar
 
-It does not claim an Android or iOS build has passed, or that SDK-based ads,
-verified purchases, store signed releases, privacy store forms or live store
-submissions have been completed. See `docs/RELEASE_READINESS.md` for hard gates.
-
-GitHub game-002 issue: https://github.com/taktemurr-ops/game-002-water-sort-universe/issues/1
+`docs/RELEASE.md` dosyasına bak: AdMob kimlikleri, mağaza ürünleri, imzalama anahtarları, gizlilik politikası adresi.
